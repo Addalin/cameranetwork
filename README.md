@@ -6,6 +6,7 @@ Code for running and analyzing the Camera Network
 ~~Latest version can be downloaded from [bitbucket](http://bitbucket.org/amitibo/CameraNetwork_git).~~
 
 [Installation Instructions](docs/source/install.rst)
+
 [Usage Instructions](docs/source/usage.rst)
 
 Documentation
