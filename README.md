@@ -41,4 +41,4 @@ Amit Aides
 License
 -------
 
-Please see the LICENSE file for details on copying and usage.
+Please see the (LICENSE)[LICENSE.md] file for details on copying and usage.
