@@ -34,6 +34,8 @@
 ## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ## ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.##
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
 """
 Created on Sat Jul 20 14:27:48 2013
 
@@ -80,12 +82,12 @@ class MyGLViewWidget(gl.GLViewWidget):
         super(MyGLViewWidget, self).mouseReleaseEvent(ev)
         if self._downpos == ev.pos():
             if ev.button() == 2:
-                print 'show context menu'
+                print('show context menu')
             elif ev.button() == 1:
                 x = ev.pos().x() - self.width() / 2
                 y = ev.pos().y() - self.height() / 2
                 self.pan(-x, -y, 0, relative=True)
-                print self.opts['center']
+                print(self.opts['center'])
         self._prev_zoom_pos = None
         self._prev_pan_pos = None
         self.sigUpdate.emit()
