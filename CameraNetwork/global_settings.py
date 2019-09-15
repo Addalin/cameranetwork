@@ -1,38 +1,40 @@
-##
-## Copyright (C) 2017, Amit Aides, all rights reserved.
-##
-## This file is part of Camera Network
-## (see https://bitbucket.org/amitibo/cameranetwork_git).
-##
-## Redistribution and use in source and binary forms, with or without modification,
-## are permitted provided that the following conditions are met:
-##
-## 1)  The software is provided under the terms of this license strictly for
-##     academic, non-commercial, not-for-profit purposes.
-## 2)  Redistributions of source code must retain the above copyright notice, this
-##     list of conditions (license) and the following disclaimer.
-## 3)  Redistributions in binary form must reproduce the above copyright notice,
-##     this list of conditions (license) and the following disclaimer in the
-##     documentation and/or other materials provided with the distribution.
-## 4)  The name of the author may not be used to endorse or promote products derived
-##     from this software without specific prior written permission.
-## 5)  As this software depends on other libraries, the user must adhere to and keep
-##     in place any licensing terms of those libraries.
-## 6)  Any publications arising from the use of this software, including but not
-##     limited to academic journal and conference publications, technical reports and
-##     manuals, must cite the following works:
-##     Dmitry Veikherman, Amit Aides, Yoav Y. Schechner and Aviad Levis, "Clouds in The Cloud" Proc. ACCV, pp. 659-674 (2014).
-##
-## THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
-## WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-## MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-## EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-## INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-## BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-## DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-## LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-## ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.##
+#
+# Copyright (C) 2017, Amit Aides, all rights reserved.
+#
+# This file is part of Camera Network
+# (see https://bitbucket.org/amitibo/cameranetwork_git).
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+# 1)  The software is provided under the terms of this license strictly for
+#     academic, non-commercial, not-for-profit purposes.
+# 2)  Redistributions of source code must retain the above copyright notice, this
+#     list of conditions (license) and the following disclaimer.
+# 3)  Redistributions in binary form must reproduce the above copyright notice,
+#     this list of conditions (license) and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+# 4)  The name of the author may not be used to endorse or promote products derived
+#     from this software without specific prior written permission.
+# 5)  As this software depends on other libraries, the user must adhere to and keep
+#     in place any licensing terms of those libraries.
+# 6)  Any publications arising from the use of this software, including but not
+#     limited to academic journal and conference publications, technical reports and
+#     manuals, must cite the following works:
+#     Dmitry Veikherman, Amit Aides, Yoav Y. Schechner and Aviad Levis,
+#     "Clouds in The Cloud" Proc. ACCV, pp. 659-674 (2014).
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.##
+
 """
 Globals
 """
@@ -73,8 +75,8 @@ DEFAULT_PROXY_PARAMS = """
 # Configuration server
 #
 CONFIGURATION_SERVER = 'tx.technion.ac.il'
-CONFIGURATION_SERVER_USER = 'amitibo'
-CONFIGURATION_SERVER_URL_BASE = 'http://%s/~amitibo/cameras_settings/' % CONFIGURATION_SERVER
+CONFIGURATION_SERVER_USER = 'amitibo' # TODO Update?
+CONFIGURATION_SERVER_URL_BASE = 'http://%s/~amitibo/cameras_settings/' % CONFIGURATION_SERVER # TODO Update?
 CONFIGURATION_SERVER_BASE_PATH = 'public_html/cameras_settings'
 
 PROXY_SETTINGS_FILE_NAME = 'proxy_server_{timestamp}.json'
@@ -120,7 +122,7 @@ PROXY_SETTINGS_DICT = {
 SSH_TUNNEL_WAIT_TIME = 2
 
 #
-# Identities of the proxy sockets used for rounting the messages.
+# Identities of the proxy sockets used for routing the messages.
 #
 PROXY_DEALER_IDENTITY = 'PROXY_DEALER'
 PROXY_ROUTER_IDENTITY = 'PROXY_ROUTER'
@@ -150,9 +152,15 @@ UPLOAD_PATH = '"SKY_CAMS_UPLOADS/{operation}/{camera_identity}/{subfolder}/{file
 # without the exec, the shell=True option causes the shell to open a separate process with a different
 # pid.
 #
-REVERSE_AUTOSSH_CMD = 'AUTOSSH_DEBUG=1 exec autossh -M 0 -v -i {identity_file} -o "ExitOnForwardFailure yes" -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -N -R {tunnel_port}:localhost:{local_port} {server_user}@{server_ip}'
-REVERSE_SSH_CMD = "exec ssh -i {identity_file} -oExitOnForwardFailure=yes -oServerAliveInterval=60 -N -R {tunnel_port}:localhost:{local_port} {server_user}@{server_ip}"
+REVERSE_AUTOSSH_CMD = 'AUTOSSH_DEBUG=1 exec autossh -M 0 -v -i {identity_file} -o "ExitOnForwardFailure yes" -o' \
+                      ' "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -N -R' \
+                      ' {tunnel_port}:localhost:{local_port} {server_user}@{server_ip}'
+
+REVERSE_SSH_CMD = "exec ssh -i {identity_file} -oExitOnForwardFailure=yes -oServerAliveInterval=60 -N -R" \
+                  " {tunnel_port}:localhost:{local_port} {server_user}@{server_ip}"
+
 SCP_CMD = "scp -i {identity_file} {src_path} {server_user}@{server_ip}:{dst_path}"
+
 TUNNEL_DESCRIPTION = "{tunnel_port}:localhost:{local_port} {server_user}@{server_ip}"
 
 #
@@ -299,7 +307,6 @@ MSG_TYPE_TUNNEL = 'tunnel'
 MSG_TYPE_TUNNEL_CHECK = 'tunnel_details'
 MSG_TYPE_LOCAL = 'local_ip'
 MSG_TYPE_UPDATE = 'update'
-MSG_TYPE_UPDATE = 'update'
 
 MSG_STATUS_FIELD = 'status'
 MSG_STATUS_OK = 'ok'
@@ -382,6 +389,7 @@ SUN_ALTITUDE_DAY_THRESH = -0.1
 SUN_ALTITUDE_SUNSHADER_THRESH = 0
 SUN_ALTITUDE_EXPOSURE_THRESH = 0.001
 
+
 #
 # Setup paths
 #
@@ -420,7 +428,7 @@ def initPaths(HOME_PATH=None):
     SUN_POSITIONS_PATH = os.path.join(HOME_PATH, 'sun_positions')
     DARK_IMAGES_PATH = os.path.join(HOME_PATH, 'dark_images')
 
-    UPLOAD_CMD =  os.path.join(HOME_PATH, ".local/bin/dropbox_uploader.sh -k upload {capture_path} {upload_path}")
+    UPLOAD_CMD = os.path.join(HOME_PATH, ".local/bin/dropbox_uploader.sh -k upload {capture_path} {upload_path}")
 
 
 ################################################################################
