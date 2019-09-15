@@ -1,38 +1,40 @@
-##
-## Copyright (C) 2017, Amit Aides, all rights reserved.
-##
-## This file is part of Camera Network
-## (see https://bitbucket.org/amitibo/cameranetwork_git).
-##
-## Redistribution and use in source and binary forms, with or without modification,
-## are permitted provided that the following conditions are met:
-##
-## 1)  The software is provided under the terms of this license strictly for
-##     academic, non-commercial, not-for-profit purposes.
-## 2)  Redistributions of source code must retain the above copyright notice, this
-##     list of conditions (license) and the following disclaimer.
-## 3)  Redistributions in binary form must reproduce the above copyright notice,
-##     this list of conditions (license) and the following disclaimer in the
-##     documentation and/or other materials provided with the distribution.
-## 4)  The name of the author may not be used to endorse or promote products derived
-##     from this software without specific prior written permission.
-## 5)  As this software depends on other libraries, the user must adhere to and keep
-##     in place any licensing terms of those libraries.
-## 6)  Any publications arising from the use of this software, including but not
-##     limited to academic journal and conference publications, technical reports and
-##     manuals, must cite the following works:
-##     Dmitry Veikherman, Amit Aides, Yoav Y. Schechner and Aviad Levis, "Clouds in The Cloud" Proc. ACCV, pp. 659-674 (2014).
-##
-## THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
-## WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-## MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
-## EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-## INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-## BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-## DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-## LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-## ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.##
+#
+# Copyright (C) 2017, Amit Aides, all rights reserved.
+#
+# This file is part of Camera Network
+# (see https://bitbucket.org/amitibo/cameranetwork_git).
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+# 1)  The software is provided under the terms of this license strictly for
+#     academic, non-commercial, not-for-profit purposes.
+# 2)  Redistributions of source code must retain the above copyright notice, this
+#     list of conditions (license) and the following disclaimer.
+# 3)  Redistributions in binary form must reproduce the above copyright notice,
+#     this list of conditions (license) and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+# 4)  The name of the author may not be used to endorse or promote products derived
+#     from this software without specific prior written permission.
+# 5)  As this software depends on other libraries, the user must adhere to and keep
+#     in place any licensing terms of those libraries.
+# 6)  Any publications arising from the use of this software, including but not
+#     limited to academic journal and conference publications, technical reports and
+#     manuals, must cite the following works:
+#     Dmitry Veikherman, Amit Aides, Yoav Y. Schechner and Aviad Levis,
+#     "Clouds in The Cloud" Proc. ACCV, pp. 659-674 (2014).
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO
+# EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 from __future__ import division
 import bisect
 from CameraNetwork.arduino_utils import ArduinoAPI
@@ -62,6 +64,7 @@ from datetime import datetime
 from datetime import timedelta
 import ephem
 import fisheye
+
 try:
     import futures
 except:
@@ -131,7 +134,7 @@ def interpolate_dark_images(exposure, exposures, dark_images):
 def time2seconds(dt):
     """Convert datetime object to seconds."""
 
-    seconds = (dt.hour*60 + dt.minute)*60 + dt.second + dt.microsecond*1e-6
+    seconds = (dt.hour * 60 + dt.minute) * 60 + dt.second + dt.microsecond * 1e-6
     return seconds
 
 
@@ -180,7 +183,7 @@ class Controller(object):
         self.loadDarkImages()
 
         #
-        # Load todays celestial position measurements
+        # Load today's celestial position measurements
         #
         if not os.path.exists(gs.SUN_POSITIONS_PATH):
             os.makedirs(gs.SUN_POSITIONS_PATH)
@@ -291,7 +294,7 @@ class Controller(object):
         logging.debug("Calibration path is: {}".format(calibration_path))
 
         if self._last_calibration_path is not None and \
-           self._last_calibration_path == calibration_path:
+                self._last_calibration_path == calibration_path:
             #
             # No need to load new calibration data.
             #
@@ -306,14 +309,14 @@ class Controller(object):
         # If so, the data is copied to the home folder.
         # Note:
         # This is done to support old cameras that were not calibrated
-        # using the testbench.
+        # using the test bench.
         #
         if os.path.exists(self.base_calibration_path):
             for base_path, file_name, dst_path in zip(
-                (calibration_path, calibration_path, self.base_calibration_path),
-                (gs.INTRINSIC_SETTINGS_FILENAME, gs.VIGNETTING_SETTINGS_FILENAME, gs.RADIOMETRIC_SETTINGS_FILENAME),
-                (gs.INTRINSIC_SETTINGS_PATH, gs.VIGNETTING_SETTINGS_PATH, gs.RADIOMETRIC_SETTINGS_PATH)
-                ):
+                    (calibration_path, calibration_path, self.base_calibration_path),
+                    (gs.INTRINSIC_SETTINGS_FILENAME, gs.VIGNETTING_SETTINGS_FILENAME, gs.RADIOMETRIC_SETTINGS_FILENAME),
+                    (gs.INTRINSIC_SETTINGS_PATH, gs.VIGNETTING_SETTINGS_PATH, gs.RADIOMETRIC_SETTINGS_PATH)
+            ):
                 try:
                     shutil.copyfile(
                         os.path.join(base_path, file_name),
@@ -388,8 +391,8 @@ class Controller(object):
         di_paths = sorted(glob.glob(os.path.join(gs.DARK_IMAGES_PATH, '*.mat')))
         if di_paths:
             self._dark_images = {
-                False:{'exposures':[], 'images':[]},
-                True:{'exposures':[], 'images':[]},
+                False: {'exposures': [], 'images': []},
+                True: {'exposures': [], 'images': []},
             }
 
             #
@@ -397,7 +400,7 @@ class Controller(object):
             #
             for path in di_paths:
                 d = sio.loadmat(path)
-                gain_boost =  d['gain_boost'][0][0] == 1
+                gain_boost = d['gain_boost'][0][0] == 1
                 self._dark_images[gain_boost]['exposures'].append(d['exposure'][0][0])
                 self._dark_images[gain_boost]['images'].append(d['image'])
 
@@ -440,16 +443,16 @@ class Controller(object):
                     #
                     # Limit the data to sun measurements only.
                     #
-                    data = data[data['object']=='Sun']
+                    data = data[data['object'] == 'Sun']
 
                     #
                     # Limit the data to angles between a range of "valid"
                     # angles.
                     #
                     data = data[
-                        (data['sunshader_angle']>gs.SUNSHADER_MIN_MEASURED)&\
-                        (data['sunshader_angle']<gs.SUNSHADER_MAX_MEASURED)
-                    ]
+                        (data['sunshader_angle'] > gs.SUNSHADER_MIN_MEASURED) &
+                        (data['sunshader_angle'] < gs.SUNSHADER_MAX_MEASURED)
+                        ]
 
                     data.index = data.index.time
                     angles.append(data['sunshader_angle'])
@@ -506,7 +509,7 @@ class Controller(object):
             except Exception as e:
                 if retries <= 0:
                     logging.exception(
-                        'The camera failed too many consequtive times. Reboot.'
+                        'The camera failed too many consecutive times. Reboot.'
                     )
                     logging.shutdown()
                     os.system('sudo reboot')
@@ -547,7 +550,7 @@ class Controller(object):
             #
             # Take value large enough to force scan
             #
-            dt = timedelta(seconds=2*gs.SUNSHADER_SCAN_PERIOD_LONG)
+            dt = timedelta(seconds=2 * gs.SUNSHADER_SCAN_PERIOD_LONG)
 
         #
         # current_time_only is without date, and used for interpolating
@@ -565,10 +568,10 @@ class Controller(object):
             #
             current_angle = self._arduino_api.getAngle()
             sunshader_scan_min = max(
-                current_angle-gs.SUNSHADER_SCAN_DELTA_ANGLE, sunshader_min
+                current_angle - gs.SUNSHADER_SCAN_DELTA_ANGLE, sunshader_min
             )
             sunshader_scan_max = min(
-                current_angle+gs.SUNSHADER_SCAN_DELTA_ANGLE, sunshader_max
+                current_angle + gs.SUNSHADER_SCAN_DELTA_ANGLE, sunshader_max
             )
             sunshader_scan_period = gs.SUNSHADER_SCAN_PERIOD_LONG
         else:
@@ -580,7 +583,7 @@ class Controller(object):
         # Is it time to do a scan?
         #
         measured_angle = None
-        if  dt > timedelta(seconds=sunshader_scan_period):
+        if dt > timedelta(seconds=sunshader_scan_period):
             self.last_sunshader_time = current_time
 
             logging.info('Time to scan')
@@ -590,18 +593,17 @@ class Controller(object):
             #
             future = Future()
             yield self.handle_sunshader_scan(future, reply=False,
-                sunshader_min=sunshader_scan_min,
-                sunshader_max=sunshader_scan_max
-            )
+                                             sunshader_min=sunshader_scan_min,
+                                             sunshader_max=sunshader_scan_max
+                                             )
             measured_angle, _ = future.result()
             logging.info("Measured angle: {}".format(measured_angle))
 
             #
-            # Update datebase with new measurment
-            # First, add new measurment to dataframe of angles.
+            # Update database with new measurement
+            # First, add new measurement to dataframe of angles.
             #
-            if measured_angle > gs.SUNSHADER_MIN_MEASURED and \
-               measured_angle < gs.SUNSHADER_MAX_MEASURED:
+            if gs.SUNSHADER_MIN_MEASURED < measured_angle < gs.SUNSHADER_MAX_MEASURED:
                 self.sunshader_angles_df.loc[current_time_only] = measured_angle
                 self.sunshader_angles_df = self.sunshader_angles_df.sort_index()
 
@@ -621,11 +623,11 @@ class Controller(object):
                     self.sunshader_fit = False
 
         #
-        # If model fitting failed or there are not enough measurments for
+        # If model fitting failed or there are not enough measurements for
         # interpolation angle use measured angle.
         #
         if (not self.sunshader_fit) or \
-           len(self.sunshader_angles_df) < gs.SUNSHADER_MIN_ANGLES:
+                len(self.sunshader_angles_df) < gs.SUNSHADER_MIN_ANGLES:
             logging.info("Either failed fitting or not enough measurements")
             if measured_angle is not None:
                 logging.info("Using measured angle: {}".format(measured_angle))
@@ -688,7 +690,8 @@ class Controller(object):
                     "color_mode": gs.COLOR_RGB
                 }
             )
-            val = img[img>128].sum() / img.size
+            # TODO CONST 128 and why 128 and not something else?
+            val = img[img > 128].sum() / img.size
 
             logging.debug(
                 "Exp.: {}, Gain: {}, image range: [{}, {}], Value: {}".format(
@@ -724,7 +727,7 @@ class Controller(object):
         #
         saturated_array = pd.Series(saturated_array).fillna(method='bfill').values
 
-        N = min(8, int((len(saturated_array)-1)/3)-1)
+        N = min(8, int((len(saturated_array) - 1) / 3) - 1)
         if N >= 4:
             b, a = signal.butter(N, 0.125)
             sun_signal = signal.filtfilt(b, a, saturated_array)
@@ -757,8 +760,7 @@ class Controller(object):
         #
         if reply:
             angles = np.arange(sunshader_min, sunshader_max)
-            return angles, np.array(saturated_array), sun_signal, \
-                measured_angle, centroid
+            return angles, np.array(saturated_array), sun_signal, measured_angle, centroid
 
         return measured_angle, centroid
 
@@ -773,13 +775,13 @@ class Controller(object):
         # Calculate the mask factor
         #
         mat = img.astype(np.float)
-        r = mat[...,0]
-        g = mat[...,1]
-        b = mat[...,2]
-        new_mask = (b>30) & (b>1.5*r)
+        r = mat[..., 0]
+        g = mat[..., 1]
+        b = mat[..., 2]
+        new_mask = (b > 30) & (b > 1.5 * r)
 
         #
-        # Accomulate the mask factor
+        # Accumulate the mask factor
         #
         if self.sky_mask_base is None:
             self.sky_mask_base = new_mask
@@ -804,8 +806,7 @@ class Controller(object):
         contour = sorted(contours, key=cv2.contourArea, reverse=True)[0]
 
         self.sky_mask = np.zeros_like(mask)
-        self.sky_mask = cv2.drawContours(
-            self.sky_mask, [contour], -1, 255, -1)
+        self.sky_mask = cv2.drawContours(self.sky_mask, [contour], -1, 255, -1)
 
         #
         # Store the masks
@@ -849,7 +850,7 @@ class Controller(object):
         #
         imgs = []
         for i in range(imgs_num):
-            self._arduino_api.setAngle(sunshader_min+2)
+            self._arduino_api.setAngle(sunshader_min + 2)
             img, real_exposure_us, real_gain_db = self._camera.capture(
                 settings={
                     "exposure_us": exposure_us,
@@ -902,7 +903,7 @@ class Controller(object):
     def handle_sunshader(self, angle, sunshader_min, sunshader_max):
         """Set the sunshader to an angle"""
 
-        if angle<sunshader_min or angle>sunshader_max:
+        if angle < sunshader_min or angle > sunshader_max:
             raise ValueError(
                 "Sunshader angle ({}) not in range ({},{})".format(
                     angle, sunshader_min, sunshader_max
@@ -954,13 +955,13 @@ class Controller(object):
     @cmd_callback
     @run_on_executor
     def handle_extrinsic(
-        self,
-        date,
-        latitude,
-        longitude,
-        altitude,
-        residual_threshold,
-        save):
+            self,
+            date,
+            latitude,
+            longitude,
+            altitude,
+            residual_threshold,
+            save):
         """Handle extrinsic calibration"""
 
         #
@@ -973,11 +974,11 @@ class Controller(object):
         except:
             logging.warn(
                 "Failed loading calibration for extrinsic date {}\n{}".format(
-                date, traceback.format_exc())
+                    date, traceback.format_exc())
             )
 
         #
-        # Load sun measurments.
+        # Load sun measurements.
         #
         today_positions_path = os.path.join(
             gs.SUN_POSITIONS_PATH, "{}.csv".format(date))
@@ -986,10 +987,10 @@ class Controller(object):
             raise Exception('No sun positions for date: {}'.format(date))
 
         #
-        # Calibratoin is done using the sun position.
+        # Calibration is done using the sun position.
         #
         positions_df = pd.read_csv(today_positions_path, index_col=0, parse_dates=True)
-        positions_df = positions_df[positions_df['object']=='Sun']
+        positions_df = positions_df[positions_df['object'] == 'Sun']
         positions_df = positions_df.dropna()
 
         if positions_df.shape[0] < gs.EXTRINSIC_CALIBRATION_MIN_PTS:
@@ -997,17 +998,15 @@ class Controller(object):
                 positions_df.shape[0]))
 
         #
-        # Convert sun measurments to directions.
+        # Convert sun measurements to directions.
         #
-        measured_postions = \
-            positions_df[['pos_x', 'pos_y']].as_matrix()
-        phi, theta, mask = self._normalization._fisheye_model.undistortDirections(
-            measured_postions)
+        measured_positions = positions_df[['pos_x', 'pos_y']].as_matrix()
+        phi, theta, mask = self._normalization._fisheye_model.undistortDirections(measured_positions)
 
         measured_directions = np.array(
             (
-                np.sin(theta)*np.cos(phi),
-                -np.sin(theta)*np.sin(phi),
+                np.sin(theta) * np.cos(phi),
+                -np.sin(theta) * np.sin(phi),
                 np.cos(theta)
             )
         ).T
@@ -1029,7 +1028,7 @@ class Controller(object):
         calculated_directions = np.array(calculated_directions)
 
         #
-        # Estimate oreintation
+        # Estimate orientation
         #
         R, rotated_directions = find_camera_orientation_ransac(
             calculated_directions, measured_directions, residual_threshold)
@@ -1049,7 +1048,7 @@ class Controller(object):
                     os.path.join(
                         calibration_day_path,
                         gs.EXTRINSIC_SETTINGS_FILENAME
-                        ),
+                    ),
                     R
                 )
             else:
@@ -1064,10 +1063,7 @@ class Controller(object):
 
     @cmd_callback
     @gen.coroutine
-    def handle_save_extrinsic(
-        self,
-        date
-        ):
+    def handle_save_extrinsic(self, date):
         """Handle save extrinsic calibration command
 
         This command saves the current extrinsic calibration on a specific
@@ -1082,19 +1078,19 @@ class Controller(object):
                 gs.CAPTURE_PATH,
                 date,
                 gs.EXTRINSIC_SETTINGS_FILENAME
-                ),
+            ),
             self._normalization.R
         )
 
     @cmd_callback
     @run_on_executor
     def handle_radiometric(
-        self,
-        date,
-        time_index,
-        residual_threshold,
-        save,
-        camera_settings):
+            self,
+            date,
+            time_index,
+            residual_threshold,
+            save,
+            camera_settings):
         """Handle radiometric calibration"""
 
         #
@@ -1117,7 +1113,7 @@ class Controller(object):
         #
         df = spm.parseSunPhotoMeter(path[0])
         spm_df = df[date.strftime("%Y-%m-%d")]
-        spm_df = [spm_df[spm_df["Wavelength(um)"]==wl] for wl in (0.6744, 0.5000, 0.4405)]
+        spm_df = [spm_df[spm_df["Wavelength(um)"] == wl] for wl in (0.6744, 0.5000, 0.4405)]
 
         #
         # Get the image list for this day.
@@ -1189,7 +1185,7 @@ class Controller(object):
             correct_radiometric=False
         )
         almucantar_samples, almucantar_angles, almucantar_coords, \
-               _, _, _ = spm.sampleImage(img, img_datas[0], almucantar_angles=angles)
+        _, _, _ = spm.sampleImage(img, img_datas[0], almucantar_angles=angles)
 
         return angles, values, almucantar_samples
 
@@ -1242,7 +1238,7 @@ class Controller(object):
         # Average the images.
         #
         if frames_num > 1:
-            img_array = img_array.mean(axis=img_array.ndim-1)
+            img_array = img_array.mean(axis=img_array.ndim - 1)
             logging.debug('Averaged %d arrays' % frames_num)
 
         #
@@ -1265,18 +1261,18 @@ class Controller(object):
         return img_array, img_data
 
     def seekImageArray(
-        self,
-        df,
-        seek_time,
-        hdr_index,
-        normalize,
-        resolution,
-        jpeg,
-        camera_settings,
-        correct_radiometric=True,
-        ignore_date_extrinsic=False,
-        timedelta_threshold=60
-        ):
+            self,
+            df,
+            seek_time,
+            hdr_index,
+            normalize,
+            resolution,
+            jpeg,
+            camera_settings,
+            correct_radiometric=True,
+            ignore_date_extrinsic=False,
+            timedelta_threshold=60
+    ):
         """Seek an image array.
 
         Args:
@@ -1342,7 +1338,7 @@ class Controller(object):
             img_array = sio.loadmat(mat_path)['img_array']
 
             base_path = os.path.splitext(mat_path)[0]
-            if os.path.exists(base_path+'.json'):
+            if os.path.exists(base_path + '.json'):
                 #
                 # Support old json data files.
                 #
@@ -1357,11 +1353,11 @@ class Controller(object):
                 with open(data_path, mode='rb') as f:
                     img_data.update(**json.load(f))
 
-            elif os.path.exists(base_path+'.pkl'):
+            elif os.path.exists(base_path + '.pkl'):
                 #
                 # New pickle data files.
                 #
-                with open(base_path+'.pkl', 'rb') as f:
+                with open(base_path + '.pkl', 'rb') as f:
                     img_data = cPickle.load(f)
 
             img_arrays.append(img_array)
@@ -1390,9 +1386,9 @@ class Controller(object):
             jpeg=False,
             correct_radiometric=True,
             ignore_date_extrinsic=False
-            ):
+    ):
         """Apply preprocessing to the raw array:
-        dark_image substraction, normalization, vignetting, HDR...
+        dark_image subtraction, normalization, vignetting, HDR...
 
         Args:
             ...
@@ -1433,7 +1429,7 @@ class Controller(object):
             except:
                 logging.error(
                     "Failed loading extrinsic data from {}\n{}".format(
-                    extrinsic_path, traceback.format_exc())
+                        extrinsic_path, traceback.format_exc())
                 )
 
         #
@@ -1475,7 +1471,7 @@ class Controller(object):
         else:
             if len(img_arrays) == 1:
                 img_array = \
-                            img_arrays[0].astype(np.float) / (img_datas[0].exposure_us / 1000)
+                    img_arrays[0].astype(np.float) / (img_datas[0].exposure_us / 1000)
             else:
                 img_exposures = [img_data.exposure_us / 1000 for img_data in img_datas]
                 img_array = calcHDR(img_arrays, img_exposures)
@@ -1517,7 +1513,7 @@ class Controller(object):
                 # Scale to Watts.
                 #
                 img_array = \
-                            self._radiometric.applyRadiometric(img_array).astype(np.float32)
+                    self._radiometric.applyRadiometric(img_array).astype(np.float32)
 
         return np.ascontiguousarray(img_array)
 
@@ -1559,11 +1555,11 @@ class Controller(object):
                     frames_num=FRAMES_NUM
                 )
 
-                img_array = img_array.mean(axis=img_array.ndim-1)
+                img_array = img_array.mean(axis=img_array.ndim - 1)
 
                 sio.savemat(
                     os.path.join(gs.DARK_IMAGES_PATH, '{}_{}.mat'.format(img_index, gain_boost)),
-                    {'image': img_array, 'exposure': exposure_us, 'gain_boost':gain_boost},
+                    {'image': img_array, 'exposure': exposure_us, 'gain_boost': gain_boost},
                     do_compression=True
                 )
                 img_index += 1
@@ -1603,7 +1599,7 @@ class Controller(object):
             # Average the images.
             #
             if frames_num > 1:
-                img_array = img_array.mean(axis=img_array.ndim-1)
+                img_array = img_array.mean(axis=img_array.ndim - 1)
                 logging.debug('Averaged %d arrays' % frames_num)
 
             #
@@ -1620,7 +1616,7 @@ class Controller(object):
                 break
 
             #
-            # Mutliply the next exposure for HDR.
+            # Multiply the next exposure for HDR.
             #
             if capture_settings['exposure_us'] >= 6000000:
                 break
@@ -1706,9 +1702,9 @@ class Controller(object):
             #
             cb = getattr(self, 'handle_{}'.format(cmd), None)
             if cb is None:
-                logging.debug("Controller received unkown command: {}".format(cmd))
+                logging.debug("Controller received unknown command: {}".format(cmd))
                 future.set_exception(
-                    Exception("Controller received unkown command: {}".format(cmd)))
+                    Exception("Controller received unknown command: {}".format(cmd)))
             else:
                 try:
                     try:
@@ -1727,4 +1723,4 @@ class Controller(object):
                     future.set_exception(e)
 
             self._in_queue.task_done()
-            logging.debug("Finished procesing cmd: {}".format(cmd))
+            logging.debug("Finished processing cmd: {}".format(cmd))
