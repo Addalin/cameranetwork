@@ -463,7 +463,7 @@ class CLIclient(object):
         angle,
         ):
 
-        assert angle >= 20 and angle <= 160, \
+        assert 20 <= angle <= 160, \
                'angle must be between 20-160, got {}'.format(angle)
 
         self.send_message(

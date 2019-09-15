@@ -33,10 +33,12 @@
 ## LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 ## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ## ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.##
+
 """
 Utilities used in the process of calibration.
 """
 
+from __future__ import print_function
 from __future__ import division
 from CameraNetwork.image_utils import raw2RGB, RGB2raw
 import cPickle
@@ -95,7 +97,7 @@ class Gimbal( object ):
         # Finalize the serial port.
         #
         try:
-            print self._port.read(size=1000)
+            print(self._port.read(size=1000))
             self._port.close()
         except:
             pass

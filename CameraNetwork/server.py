@@ -611,7 +611,7 @@ class Server(MDPWorker):
 
 
     ###########################################################
-    # Message handlders
+    # Message handlers
     ###########################################################
 
     @gen.coroutine

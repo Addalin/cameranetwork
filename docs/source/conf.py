@@ -54,11 +54,15 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('../../CameraNetwork'))
+sys.path.insert(0, os.path.abspath('../../CameraNetwork/gui'))
+sys.path.insert(0, os.path.abspath('../../CameraNetwork/mdp'))
 sys.path.insert(0, os.path.abspath('../../scripts'))
 sys.path.insert(0, os.path.abspath('../../scripts_calibrate'))
 sys.path.insert(0, os.path.abspath('../../scripts_client'))
 sys.path.insert(0, os.path.abspath('../../scripts_proxy'))
 sys.path.insert(0, os.path.abspath('../../scripts_sunphotometer'))
+sys.path.insert(0, '/home/shubi/.local/lib/python2.7/site-packages/sphinx/ext')
 
 # -- General configuration ------------------------------------------------
 
@@ -70,7 +74,7 @@ sys.path.insert(0, os.path.abspath('../../scripts_sunphotometer'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-#     'numfig',
+    'numfig',
     'sphinx.ext.autodoc',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',

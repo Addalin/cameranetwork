@@ -185,3 +185,11 @@ Installation - NEW
     ..    note::
 
         without --user it installs the scripts for all users (Windows: C:\ProgramData\Anaconda2\Scripts)
+
+
+Circuit Board connections
+=========================
+Savox SunShader Servo:
+#. Brown (Gnd) = Gnd
+#. Red (5V) = 5V
+#. Orange (Signal) = PIN NUM

@@ -33,6 +33,8 @@
 ## LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 ## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ## ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.##
+
+from __future__ import print_function
 from __future__ import division
 import numpy as np
 from numpy.polynomial import polynomial
@@ -99,7 +101,7 @@ def skFit(base_path, x, y, z, img_shape):
     img_out = np.ones(shape=img_shape) * 100
 
     for threshold in np.logspace(-2, 2, 20)[::-1]:
-        print threshold
+        print(threshold)
         img_tmp = np.zeros(shape=img_shape)
         indices = z_err < threshold
         if not np.any(indices):
