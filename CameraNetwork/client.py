@@ -49,6 +49,7 @@ from zmq.eventloop import ioloop, zmqstream
 
 import CameraNetwork.global_settings as gs
 from CameraNetwork.mdp import *
+from CameraNetwork.mdp import MDP
 from CameraNetwork.server import Server
 from CameraNetwork.utils import extractImgArray
 
@@ -134,7 +135,9 @@ class Client(MDPClient):
         pass
 
     def handle_receive(self, msg_extra, service, status, cmd, args, kwds):
-        """Callback to handle receive. This is called only if there are no other callbacks to handle the message. Derived classes should override this method."""
+        """Callback to handle receive.
+         This is called only if there are no other callbacks to handle the message.
+         Derived classes should override this method."""
 
         raise Warning('Unattended message: ', str((status, cmd, args, kwds)))
 
@@ -267,7 +270,7 @@ class ServerProxy(object):
         """Dynamically create messages."""
 
         if not hasattr(Server, 'handle_{}'.format(name)):
-            raise AttributeError("Unkown server command: {}".format(name))
+            raise AttributeError("Unknown server command: {}".format(name))
 
         #
         # Create sendmessage method.
@@ -310,9 +313,9 @@ class CLIclient(object):
             servers_id = [servers_id]
 
         unknown_servers = set(servers_id).difference(set(self.client_instance.servers))
-        if  len(unknown_servers) > 0:
+        if len(unknown_servers) > 0:
             raise IndexError(
-                'Unkown servers: {}. List of known servers: {}.'.format(
+                'Unknown servers: {}. List of known servers: {}.'.format(
                     unknown_servers, self.client_instance.servers
                 )
             )
@@ -322,7 +325,7 @@ class CLIclient(object):
     def __getattr__(self, name):
 
         if not hasattr(Server, 'handle_{}'.format(name)):
-            raise AttributeError("Unkown server command: {}".format(name))
+            raise AttributeError("Unknown server command: {}".format(name))
 
         def proxy_func(servers_id, *args, **kwds):
             return getattr(self[servers_id], name)(*args, **kwds)
@@ -529,7 +532,7 @@ class CLIclient(object):
         return img_arrays, img_datas
 
 
-def main ():
+def main():
 
     import CameraNetwork
     from CameraNetwork.sunphotometer import findClosestImageTime
