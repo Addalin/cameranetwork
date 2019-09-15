@@ -193,3 +193,7 @@ Savox SunShader Servo:
 #. Brown (Gnd) = Gnd
 #. Red (5V) = 5V
 #. Orange (Signal) = PIN NUM
+
+Installation - Old Reference
+============================
+TODO Add
