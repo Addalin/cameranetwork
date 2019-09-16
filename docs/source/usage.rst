@@ -71,3 +71,4 @@ Useful commands
 - Press ctrl+a then ctrl+d to detach the *start_proxy.py* from the terminal
 - ``screen -ls`` to see detached processes. then``screen -r <name>`` to bring it back.
 - ``sudo netstat -a -nlp -o | grep 198`` to see status of relevant ports
+

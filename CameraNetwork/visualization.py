@@ -48,6 +48,7 @@ def loadMapData():
     path1 = os.path.abspath(os.path.join(relpath, r'..', r'data', r'reconstructions', r'N32E034.hgt'))
     path2 = os.path.abspath(os.path.join(relpath, r'..', r'data', r'reconstructions', r'N32E035.hgt'))
     path3 = os.path.abspath(os.path.join(relpath, r'..', r'data', r'reconstructions', r'haifa_map.jpg'))
+    
 
     with open(path1) as hgt_data:
         hgt1 = np.fromfile(hgt_data, np.dtype('>i2')).reshape((1201, 1201))[:1200, :1200]

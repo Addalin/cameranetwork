@@ -65,6 +65,7 @@ sys.path.insert(0, os.path.abspath('../../scripts_sunphotometer'))
 # TODO Change to more Robust solution numpy
 sys.path.insert(0, os.path.abspath('../../../../.local/lib/python2.7/site-packages/sphinx/ext'))
 
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
