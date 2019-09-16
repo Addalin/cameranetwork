@@ -23,6 +23,47 @@ three components but differs due to the different platforms.
 
 The ``CameraNetwork`` is implemented completely in `Python <http://www.python.org/>_`.
 
+
+Installation - Client
+=====================
+#. Install conda. Tested on conda 4.7.11
+#. Clone the cameranetwork package::
+
+    git clone https://github.com/Addalin/cameranetwork.git
+#. Navigate to it::
+
+    cd cameranetwork
+
+#. Create conda virtual environment from `client_env.yml`
+
+    ::
+
+        conda env create -f client_env.yml
+
+    .. note::
+
+        The first line of the yml file sets the new environment's name
+
+#. Activate the environment::
+
+    conda activate <venv_name>
+
+
+#. Install the cameranetwork package
+
+    ::
+
+        python setup.py develop --user
+
+    ..    note::
+
+        without --user it installs the scripts for all users (Windows: C:\ProgramData\Anaconda2\Scripts)
+
+#. Verify successful installation by opening the GUI::
+
+    python scripts_client/camera_client.py
+
+
 Installing the Server
 =====================
 
@@ -35,6 +76,20 @@ In the following we detail the procedure of installing the required prerequisite
 once the package is installed on one compture, it is much more time effective to create an image of the Odroid
 memory card and duplicate it as needed.
 
+
+
+Others
+======
+Circuit Board connections
+-------------------------
+Savox SunShader Servo pins:
+
+#. Brown (Gnd) = Gnd
+#. Red (5V) = 5V
+#. Orange (Signal) = PIN NUM
+
+Installation - Old Reference
+============================
 Prerequisites
 -------------
 
@@ -151,15 +206,26 @@ Install the ``CameraNetwork`` package::
 
 
 
-Installation - NEW
-=====================
-#. Install conda. Tested on conda 4.7.11
-#. Clone the cameranetwork package::
+Shubi reference
+---------------
 
-    git clone https://github.com/Addalin/cameranetwork.git
-#. Navigate to it::
+#. Create conda virtual environment::
 
-    cd cameranetwork
+    conda create --name <venv_name> --no-default-packages
+    conda config --add channels conda-forge
+    conda activate cnvenv
+
+
+
+#. Install prerequisites::
+
+    conda install python=2.7 pip paramiko cython tornado=4.5.3 futures numpy scipy matplotlib beautifulsoup4 scikit-learn scikit-image ephem pandas ipython pyfirmata joblib
+    pip install pyzmq --install-option="--zmq=bundled"
+    pip install pymap3d
+    conda install enaml pillow traits pyqtgraph pyopengl vtk mayavi opencv
+
+#. Install traits-enaml
+
 #. Install additional modules::
 
     pip install ephem
@@ -185,16 +251,4 @@ Installation - NEW
     ..    note::
 
         without --user it installs the scripts for all users (Windows: C:\ProgramData\Anaconda2\Scripts)
-
-
-Circuit Board connections
-=========================
-Savox SunShader Servo:
-#. Brown (Gnd) = Gnd
-#. Red (5V) = 5V
-#. Orange (Signal) = PIN NUM
-
-Installation - Old Reference
-============================
-TODO Add
 

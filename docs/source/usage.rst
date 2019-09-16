@@ -26,6 +26,16 @@ pressing on the camera ID should lead to the camera interface screen
 
 .. image:: images/GUI_main_status.png
 
+sun Shader
+----------
+
+.. image:: images/gui_sunshader.png
+
+The angle slider allows manual setting of sunshader angle.
+The scan button moves the sunshader throughout it's whole range,
+then according to the point with least sunlight (as shown in the graph)
+determines the sunshader optimal angel.
+
 
 Camera (server)
 ===============

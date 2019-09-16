@@ -54,9 +54,6 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
-sys.path.insert(0, os.path.abspath('../../CameraNetwork'))
-sys.path.insert(0, os.path.abspath('../../CameraNetwork/gui'))
-sys.path.insert(0, os.path.abspath('../../CameraNetwork/mdp'))
 sys.path.insert(0, os.path.abspath('../../scripts'))
 sys.path.insert(0, os.path.abspath('../../scripts_calibrate'))
 sys.path.insert(0, os.path.abspath('../../scripts_client'))
