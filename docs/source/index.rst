@@ -13,6 +13,8 @@ Contents:
    camera
    usage
    modules
+   CameraNetwork
+
 
 
 Indices and tables
