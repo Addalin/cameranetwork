@@ -81,7 +81,7 @@ The process should apply for a sunny day having clear sky, and requires two step
 and calculates the `measured_directions` according to the fisheye model (undistortion)
 on a unit sphere. 
 
-     - The fisheye model is pre-determined during intrinsic calibration process (add link).
+     - The fisheye model is pre-determined during [intrinsic calibration process](https://github.com/Addalin/cameranetwork/blob/3552f2453f3d42942ae6f90c2245b9ccb7c3dbce/CameraNetwork/controller.py#L888-L901).
      
     - Using the measurements times in `sun_positions.csv` and *ephem*, the function calculates sun directions `calculated_directions`. 
 And then estimates camera orientation, by doing fit of `measured_directions` to `calculated_directions`. 
@@ -131,7 +131,8 @@ To get the sunphotometer measurements:
 
 For example:
 
-[Radiometric](/docs/source/images/radiometric_calibration.png)
+[Radiometric](docs/source/images/radiometric_calibration.png)
+
 ##### Questions regarding radiometric calibration:  
 1. What are the final conversion units?
 2. What inputs/changes are required for a new experiment?
