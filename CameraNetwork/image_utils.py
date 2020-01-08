@@ -33,7 +33,8 @@
 ## LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 ## OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ## ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.##
-"""General utilities for image processing.
+"""
+General utilities for image processing.
 """
 from __future__ import division, absolute_import, print_function
 from CameraNetwork.utils import obj
@@ -701,23 +702,26 @@ class VisualHull(object):
         # Calculate the collective clouds weight.
         #
         weights = np.array(grid_scores).prod(axis=0)
-
+        # TODO: Consider to change the prod to other arithmethic calculation. (maybe OR ?) (I think this removes clouds edges from the space carving)
         #
         # voxels that are not seen (outside the fov/sun_mask) by at least two cameras
         # are zeroed.
         #
         grid_masks = np.array(grid_masks).sum(axis=0)
         weights[grid_masks<2] = 0
+
+        #
+        # More cameras viewing the voxel increase it's own score.
+        #
         nzi = weights > 0
         weights[nzi] = weights[nzi]**(1/grid_masks[nzi])
 
         #
-        # Calculate color consistency as described in the article
+        # Calculate color consistency as described in the article. (see Equation 5.5 in p.54 , Amit's thesis)
         #
         std_rgb = np.dstack(cloud_rgb).std(axis=2).mean(axis=1)
         mean_rgb = np.dstack(cloud_rgb).mean(axis=2).mean(axis=1)
-        color_consistency = np.exp(-(std_rgb/mean_rgb)/color_consistency_sigma)
-
+        color_consistency = np.exp(-(std_rgb/(mean_rgb + np.finfo(float).eps))/color_consistency_sigma)
         #
         # Take into account both the clouds weights and photo consistency.
         #

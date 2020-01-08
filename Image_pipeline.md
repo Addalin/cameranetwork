@@ -95,6 +95,7 @@ To apply the extrinsic calibration from the GUI:
  `extrinsic calibrate` 
   - Also saves the extrinsic_data.npy in camera folder.
 
+
 To save all cameras extrinsic calibration: 
 
   - `Arrays` --> `Save Extrinsic`
@@ -103,21 +104,24 @@ To save all cameras extrinsic calibration:
 
 Graphical Result:
 
-[extrinsic](docs/source/images/snapshot_extrinsic.png)
+![extrinsic](docs/source/images/snapshot_extrinsic.png)
+
 
 ### 3. Radiometric calibration:
 To perform radiometric calibration with a sunphotometer, 
 the camera should be close to the sunphotometer, and the measurements should be done in a clear sky day. 
 
 To get the sunphotometer measurements: 
-1. download files from NASA's [AERONET site](https://aeronet.gsfc.nasa.gov/cgi-bin/webtool_inv_v3?stage=3&region=Middle_East&state=Israel&site=Technion_Haifa_IL&place_code=10&if_polarized=0).
+
+1. Download files from NASA's [AERONET site](https://aeronet.gsfc.nasa.gov/cgi-bin/webtool_inv_v3?stage=3&region=Middle_East&state=Israel&site=Technion_Haifa_IL&place_code=10&if_polarized=0).
 
     - All the current files can be found under `.../data/aeronet`. 
   
     - Some manipulation, such as deleting first rows, might be needed for new data. 
 
     - The meaning of numbers and measurements can be found [here](https://aeronet.gsfc.nasa.gov/new_web/units.html). 
-        - Specifically: irradiance sunphotometer units are [uW/cm^2/sr/nm].
+
+        - Specifically: irradiance sunphotometer units are ![formula](https://render.githubusercontent.com/render/math?math=uW/cm^2/sr/nm).
 
 2. The function [handle_radiometric()](https://github.com/Addalin/cameranetwork/blob/3552f2453f3d42942ae6f90c2245b9ccb7c3dbce/CameraNetwork/controller.py#L1095-L1178):
 
@@ -133,11 +137,52 @@ For example:
 
 [Radiometric](docs/source/images/radiometric_calibration.png)
 
+
 ##### Questions regarding radiometric calibration:  
 1. What are the final conversion units?
 2. What inputs/changes are required for a new experiment?
 
+### 4. 3D grid and space curving:
+The [geographic coordinate systems](https://en.wikipedia.org/wiki/Geographic_coordinate_system) that are used here are: 
+1. The ECEF (earth-centered, earth-fixed frame) is the common 3D grid that is being used for moving the point-of-view (the observing camera) around the grid conveniently according to cameras' locations. 
+2. The NED (North East Down) grid (X,Y,Z) is used for visualization and reconstruction grid.
+
+See their definitions in the project [here](https://github.com/Addalin/cameranetwork/blob/c69dda2adc041dc2dc98660b34e57769213f23a9/CameraNetwork/gui/main.py#L1393-L1420). 
+
+There are several conversion processes that are being done: 
+
+1. [ProjectGrid()](https://github.com/Addalin/cameranetwork/blob/fa7d2b2f29d5217cdc2b216ae55d147393e9db0d/CameraNetwork/image_utils.py#L615-L645) - Projecting the 3D grid of the interest volume, onto image plane. Which uses ecef2ned in [projectECEF()](https://github.com/Addalin/cameranetwork/blob/c69dda2adc041dc2dc98660b34e57769213f23a9/CameraNetwork/gui/main.py#L881-L933). 
+The 3D NED grid is of size 12 X 12 X 10 [km^3], having 81 X 81 X 121 voxels, each voxel size is of 150 X 150 X 100 [m^3].
+The 3D grid is projected to a 2D grid on the image plane, shown as red dots on image plane).
+This is done when choosing: `View settings`-->`Widgets`--> `show grid`. 
+
+// TODO : add snapshots of the 3d view and image with red dotted grid. 
+
+This method is also being used when computing the [space carve](https://github.com/Addalin/cameranetwork/blob/fa7d2b2f29d5217cdc2b216ae55d147393e9db0d/CameraNetwork/image_utils.py#L738-L810) score per each view.
+This is done when choosing in the map view `Space carving`-->`Show space carving`.
+
+// TODO : add snapshots of the map with the space carving. 
+
+Another usage of this method is when applying [Update LOS](https://github.com/Addalin/cameranetwork/blob/c69dda2adc041dc2dc98660b34e57769213f23a9/CameraNetwork/gui/main.py#L620-L667). Ths function converts the  also uses 
+LOS of a single image to the epipolar lines on all other images.
+
+// TODO : add snapshot of showing LOS and how to get to it. 
+
+2. The main process [do_space_carving()](https://github.com/Addalin/cameranetwork/blob/c69dda2adc041dc2dc98660b34e57769213f23a9/CameraNetwork/gui/main.py#L317-L337) of the 3D grid, calls visual hall calculation, using a process pool. 
+[calc_visual_hull()](https://github.com/Addalin/cameranetwork/blob/2583c47e52d937ba70c5d7f9293d970c0fcba428/CameraNetwork/image_utils.py#L655-L739) runs space carve per each view separately, and collects their results.   
+
+(// TODOL add snapshot and explanation here.). 
+
+[space_carve_view()](https://github.com/Addalin/cameranetwork/blob/fa7d2b2f29d5217cdc2b216ae55d147393e9db0d/CameraNetwork/image_utils.py#L739-L810), projects the the 3D grid onto the corresponding image plane. 
+This process is done according to the number of perturbations chosen by the user. The final `grid_score` is the mean value throughout the perturbations, for the voxels that are seen from this view. 
+
+// TODOL add snapshot and explanation here.). 
+
+The `grid score` is based on the `cloud_weights`. This is done at [_update_cloud_weights()](https://github.com/Addalin/cameranetwork/blob/c69dda2adc041dc2dc98660b34e57769213f23a9/CameraNetwork/gui/main.py#L936-L985), on the 2D image plane (see section *Computation of cloud scores maps*, p.23, Amit's Aides thesis).
+
+
+Following that, [calc_visual_hull()](https://github.com/Addalin/cameranetwork/blob/2583c47e52d937ba70c5d7f9293d970c0fcba428/CameraNetwork/image_utils.py#L655-L739), collects scores from all servers/ subprocesses. 
+
 ### TODO: Other issues to cover regarding image pipeline: 
-1. Space curving - the transition from 2d and 3d.
-2. Calculate pixels phase function.?
-3. Intrinsic calibration. 
+1. Calculate pixels phase function.?
+2. Intrinsic calibration. 

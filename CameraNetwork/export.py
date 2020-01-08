@@ -63,7 +63,7 @@ def exportToShdom(
         base_path (str): Path to store export data.
         array_items (list): List of array items.
         grid (list): List of grid array. This is the grid to reconstruct.
-        lat, lon, lat (float): The latitude, longitude and altitude of the center
+        lat, lon, alt (float): The latitude, longitude and altitude of the center
             of the grid.
         progress_callback (function): Callback function to update the (GUI) with
             the progress of the export.

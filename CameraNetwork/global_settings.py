@@ -264,7 +264,7 @@ DEFAULT_NORMALIZATION_SIZE = 501
 #
 # Amit:
 # The default radiometric settings were taken from camera 109.
-#
+# TODO: what are the units?
 DEFAULT_RADIOMETRIC_SETTINGS = \
     [0.077523644728250449, 0.11163146919636868, 0.11847859109577621]
 

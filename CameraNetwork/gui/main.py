@@ -883,7 +883,7 @@ class ArrayModel(Atom):
 
         Args:
             ECEF_pts (tuple of arrays): points in ECEF coords.
-            fiter_fov (bool, optional): If True, points below the horizion
+            filter_fov (bool, optional): If True, points below the horizion
                will not be returned. If false, the indices of these points
                will be returned.
 
@@ -938,17 +938,20 @@ class ArrayModel(Atom):
         if change["value"] is None:
             return
 
+        # The following calculation is based on page 23 in Amit's thesis (Computation of cloud scores maps)
+        # TODO: consider to change cloud score in 2D .
         r = self.img_array[..., 0].astype(np.float)
         b = self.img_array[..., 2].astype(np.float)
 
         cloud_weights = np.zeros_like(r)
         eps = np.finfo(b.dtype).eps
 
-        threshold = self.cloud_weight_threshold
+        threshold = self.cloud_weight_threshold # currently 0.8
         ratio = r / (b+eps)
         ratio_mask = ratio>threshold
         cloud_weights[ratio_mask] = \
             (2-threshold)/(1-threshold)*(ratio[ratio_mask]-threshold)/(ratio[ratio_mask]+1-threshold)
+        #The current calculation:  ( 1.2 / 0.2 ) * (r - 0.8 ) / (r + 0.2 )
 
         #
         # Limit cloud_weights to 1.
@@ -1403,15 +1406,15 @@ class MainModel(Atom):
     #
     # Reconstruction Grid parameters.
     # Note:
-    # There are two grids used:
+    # There are three grids used:
     # - GRID_VIS_ECEF: Used for visualization on the camera array.
     # - GRID_ECEF: Used for the visual hull algorithm.
     # - GRID_NED: The grid exported for reconstruction.
     #
-    delx = Float(150)
-    dely = Float(150)
-    delz = Float(100)
-    TOG = Float(12000)
+    delx = Float(150) #  [meters]
+    dely = Float(150) #  [meters]
+    delz = Float(100) #  [meters]
+    TOG = Float(12000) #  [meters]
     GRID_VIS_ECEF = Tuple()
     GRID_ECEF = Tuple()
     GRID_NED = Tuple()
