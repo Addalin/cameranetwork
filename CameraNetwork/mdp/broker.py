@@ -81,7 +81,7 @@ class MDPBroker(object):
     requested service.
 
     This base class defines the overall functionality and the API. Subclasses are
-    ment to implement additional features (like logging).
+    meant to implement additional features (like logging).
 
     The broker uses ZMQ ROUTER sockets to deal with clients and workers. These sockets
     are wrapped in pyzmq streams to fit well into IOLoop.
@@ -628,7 +628,7 @@ class WorkerRep(object):
     """Helper class to represent a worker in the broker.
 
     Instances of this class are used to track the state of the attached worker
-    and carry the timers for incomming and outgoing heartbeats.
+    and carry the timers for incoming and outgoing heartbeats.
 
     :param proto:    the worker protocol id.
     :type wid:       str
@@ -655,7 +655,7 @@ class WorkerRep(object):
     def send_uniqueid(self):
         """Called on W_READY from worker.
 
-        Sends unique id tu worker.
+        Sends unique id to worker.
         """
 
         logging.debug('Broker to Worker {} sending unique id: {}'.format(
